@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+  labels:
+    name: nginx-service
+    environment: DEV
+spec:
+  type: NodePort
+  selector:
+    course: kubernetes
+  ports:
+  - name: http-port
+    protocal: tcp
+    #service port
+    port: 80
+    # pod port
+    targetPort: 80
