@@ -11,7 +11,9 @@ spec:
       app: nginx
   template:
     metadata:
-      app: nginx
+      name: nginx-pod
+      labels:
+        app: nginx
     spec:
       containers:
       - name: nginx
