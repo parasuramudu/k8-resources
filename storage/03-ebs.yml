@@ -7,6 +7,6 @@ spec:
     storage: 10Gi
   accessModes:
   - ReadWriteOnce
-  awsElasticBlockStorage:
+  awsElasticBlockStore:
     volumeID: "vol-06c4aae20aafa7bcc"
     fsType: ext4
