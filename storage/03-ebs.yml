@@ -52,12 +52,12 @@ spec:
     ports:
     - containerPort: 80
     volumeMounts:
-    - name: html
-      mountPath: "/usr/share/nginx/html"
+    - mountPath: "/usr/share/nginx/html"
+      name: html
   volumes:
   - name: html
     persistentVolumeClaim:
-      claimName: "ebs-static-pvc"
+      claimName: ebs-static-pvc
 ---
 apiVersion: v1
 kind: Service
