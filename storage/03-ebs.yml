@@ -62,11 +62,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: nginx-service
-  namespace: default
+  name: nginx
+  #namespace: default
   labels:
-    name: nginx-service
-    environment: DEV
+    name: nginx
 spec:
   type: LoadBalancer
   selector:
