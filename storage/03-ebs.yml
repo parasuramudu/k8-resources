@@ -58,3 +58,21 @@ spec:
   - name: html
     persistentVolumeClaim:
       claimName: "ebs-static-pvc"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+  namespace: default
+  labels:
+    name: nginx-service
+    environment: DEV
+spec:
+  type: LoadBalancer
+  selector:
+    purpose: ebs-static
+  ports:
+  - name: http-port
+    protocol: TCP
+    port: 80
+    targetPort: 80
