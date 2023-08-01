@@ -20,3 +20,39 @@ spec:
       storage: 30Gi
   storageClassName: "ebs-dynamic-sc"
 ---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+  labels:
+    purpose: ebs-dynamic
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    ports:
+    - containerPort: 80
+    volumeMounts:
+    - mountPath: /usr/share/nginx/html
+      name: html
+  volumes:
+  - name: html
+    persistentVolumeClaim:
+      claimName: ebs-dynamic-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx
+  #namespace: default
+  labels:
+    name: nginx
+spec:
+  type: LoadBalancer
+  selector:
+    purpose: ebs-dynamic
+  ports:
+  - name: http-port
+    protocol: TCP
+    port: 80
+    targetPort: 80
