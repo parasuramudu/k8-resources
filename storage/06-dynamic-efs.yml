@@ -1,12 +1,62 @@
 kind: StorageClass
 apiVersion: storage.k8s.io/v1
 metadata:
-  name: efs-sc
+  name: efs-dynamic-sc
 provisioner: efs.csi.aws.com
 parameters:
   provisioningMode: efs-ap
-  fileSystemId: fs-92107410
+  fileSystemId: fs-0fdad8f5d1e5ff9fa
   directoryPerms: "700"
   gidRangeStart: "1000" # optional
   gidRangeEnd: "2000" # optional
-  basePath: "/rodoshop
+  basePath: "/rodoshop"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: efs-dynamic-pvc
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 50Gi
+  storageClassName: "efs-dynamic-sc"
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+  labels:
+    purpose: efs-dynamic
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    ports:
+    - containerPort: 80
+    volumeMounts:
+    - mountPath: /usr/share/nginx/html
+      name: html
+  volumes:
+  - name: html
+    persistentVolumeClaim:
+      claimName: efs-dynamic-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx
+  #namespace: default
+  labels:
+    name: nginx
+spec:
+  type: LoadBalancer
+  selector:
+    purpose: efs-dynamic
+  ports:
+  - name: http-port
+    protocol: TCP
+    port: 80
+    targetPort: 80
+
