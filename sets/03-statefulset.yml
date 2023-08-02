@@ -41,7 +41,7 @@ spec:
       name: www
     spec:
       accessModes: ["ReadWriteOnce"]
-      storageClassName: "my-storage-class"
+      storageClassName: "ebs-dynamic-sc"
       resources:
         requests:
           storage: 1Gi
