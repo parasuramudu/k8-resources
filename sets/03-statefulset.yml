@@ -29,7 +29,7 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: registry.k8s.io/nginx-slim:0.8
+        image: nginx
         ports:
         - containerPort: 80
           name: web
@@ -44,4 +44,4 @@ spec:
       storageClassName: "ebs-dynamic-sc"
       resources:
         requests:
-          storage: 1Gi
+          storage: 2Gi
