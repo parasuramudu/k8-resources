@@ -1,35 +1,38 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: nginx
+  name: nginx-service
   labels:
     app: nginx
 spec:
+  clusterIP: Node
+  selector:
+    app: nginx-pod
   ports:
   - port: 80
     name: web
-  clusterIP: None
-  selector:
-    app: nginx
 ---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: web
+  labels:
+    app: nginx
 spec:
-  replicas: 2 # by default is 1
+  replicas: 2
+  serviceNmae: nginx-service
   selector:
     matchLabels:
-      app: nginx # has to match .spec.template.metadata.labels
-  serviceName: "nginx"
+      app: nginx
   template:
     metadata:
+      name: nginx-pod
       labels:
-        app: nginx # has to match .spec.selector.matchLabels
+        app: nginx
     spec:
       containers:
       - name: nginx
-        image: registry.k8s.io/nginx-slim:0.8
+        image: nginx
         ports:
         - containerPort: 80
           name: web
@@ -40,7 +43,8 @@ spec:
   - metadata:
       name: www
     spec:
-      accessModes: ["ReadWriteOnce"]
+      accessModes:
+      - ReadWriteOnce
       storageClassName: "ebs-sc"
       resources:
         requests:
