@@ -25,3 +25,6 @@ spec:
           limits:
             memory: "3Gi"
             cpu: "750m"
+        ports:
+        - containerPort: 80
+
