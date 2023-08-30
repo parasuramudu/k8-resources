@@ -3,17 +3,17 @@ kind: Deployment
 metadata:
   name: nginx
   labels:
-    type: reverse proxy
+    type: reverse-proxy
 spec:
   replicas: 4
   selector:
     matchLabels:
-      type: reverse proxy
+      type: reverse-proxy
   template:
     metadata:
       name: nginx
       labels:
-        type: reverse proxy
+        type: reverse-proxy
     spec:
       containers:
       - name: nginx
