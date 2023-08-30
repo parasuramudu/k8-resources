@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: tomee
+        image: nginx
         resources:
           requests:
             memory: "3Gi"
@@ -26,7 +26,7 @@ spec:
             memory: "3Gi"
             cpu: "750m"
         ports:
-        - containerPort: 8080
+        - containerPort: 80
 ---
 apiVersion: v1
 kind: Service
