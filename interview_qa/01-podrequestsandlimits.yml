@@ -6,7 +6,7 @@ metadata:
   labels:
     type: reverse-proxy
 spec:
-  replicas: 100
+  replicas: 500
   selector:
     matchLabels:
       type: reverse-proxy
